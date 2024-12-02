@@ -21,7 +21,6 @@ def isSafe(report):
         elif not increasing and report[i] < report[i+1]:
             return False
 
-
         diff = abs(report[i] - report[i+1])
         if (diff == 0 or diff > 3):
             return False
@@ -43,13 +42,13 @@ def isSafeWithTolerance(report):
     
 
 def part1():
-    reports = parseinput("input1.txt")
+    reports = parseinput("input.txt")
     result = sum(isSafe(report) for report in reports)
 
     print(result)
 
 def part2():
-    reports = parseinput("input1.txt")
+    reports = parseinput("input.txt")
     result = sum(isSafeWithTolerance(report) for report in reports)
 
     print(result)

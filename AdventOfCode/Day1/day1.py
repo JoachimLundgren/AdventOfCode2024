@@ -12,7 +12,7 @@ def parseinput(filename):
     return first, second
 
 def part1():
-    first, second = parseinput("input1.txt")
+    first, second = parseinput("input.txt")
     first.sort()
     second.sort()
 
@@ -24,7 +24,7 @@ def part1():
     print(distance)
 
 def part2():
-    first, second = parseinput("input1.txt")
+    first, second = parseinput("input.txt")
 
     similarity = 0
 
