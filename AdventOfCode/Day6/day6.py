@@ -97,6 +97,5 @@ def part2():
     print(loops)
 
 
-start = time.time()
 part1()
 part2()
