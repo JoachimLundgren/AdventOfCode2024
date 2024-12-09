@@ -1,14 +1,7 @@
 import os
-from collections import deque
 
 
 def parseinput(filename):
-    with open(os.path.join(os.path.dirname(__file__), filename)) as file:
-        str = file.read()
-        return deque(map(int, str))
-
-
-def parseinput2(filename):
     with open(os.path.join(os.path.dirname(__file__), filename)) as file:
         input = list(map(int, file.read()))
         files = []
@@ -42,7 +35,7 @@ def getChecksum(fileSize, expandedIndex, fileId):
 
 
 def part1(input):
-    files, emptySpaces = parseinput2(input)
+    files, emptySpaces = parseinput(input)
 
     checksum = 0
     file = None
@@ -74,7 +67,7 @@ def part1(input):
 
 
 def part2(input):
-    files, emptySpaces = parseinput2(input)
+    files, emptySpaces = parseinput(input)
 
     checksum = 0
 
