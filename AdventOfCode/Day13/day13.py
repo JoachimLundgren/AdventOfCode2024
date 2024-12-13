@@ -22,15 +22,14 @@ def parseinput(filename, extraPrize):
         lines = file.readlines()
         i = 0
         while i < len(lines):
-            machines.append(ClawMachine(Coordinate(parse(lines[i], 0)), Coordinate(
-                parse(lines[i+1], 0)), Coordinate(parse(lines[i+2], extraPrize))))
+            machines.append(ClawMachine(parse(lines[i], 0), parse(lines[i+1], 0), parse(lines[i+2], extraPrize)))
             i += 4
         return machines
 
 
 def parse(str, extraPrize):
     numbers = list(map(int, re.findall(r'\d+', str)))
-    return [i + extraPrize for i in numbers]
+    return Coordinate([i + extraPrize for i in numbers])
 
 
 # Solved with cramers rule
