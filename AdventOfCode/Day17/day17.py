@@ -14,7 +14,7 @@ def parseinput(filename):
         return regA, regB, regC, program
 
 
-def run(regA, regB, regC, program):
+def run(regA, regB, regC, program, breakAfterFirstOutput=False):
     ip = 0
     output = []
 
@@ -28,7 +28,7 @@ def run(regA, regB, regC, program):
             case 1:  # bxl
                 regB = regB ^ operand
             case 2:  # bst
-                regB = getComboOperand(operand, regA, regB, regC) % 8  # TODO Verify
+                regB = getComboOperand(operand, regA, regB, regC) % 8
             case 3:  # jnz
                 if regA != 0:
                     ip = operand
@@ -37,6 +37,8 @@ def run(regA, regB, regC, program):
                 regB = regB ^ regC
             case 5:  # out
                 output.append(getComboOperand(operand, regA, regB, regC) % 8)
+                if breakAfterFirstOutput:
+                    return output
             case 6:  # bdv
                 regB = int(regA / (2 ** getComboOperand(operand, regA, regB, regC)))
             case 7:  # cdv
@@ -71,22 +73,22 @@ def part1(input):
 
 
 def part2(input):
-    _, regB, regC, program = parseinput(input)
+    _, _, _, program = parseinput(input)
 
     # I analyzed the program and realized that I didn't need to check all potential A.
     # Also it doesn't matter what B and C where so those can be whatever at start of each run.
     # For every output, A was divided by 8 and converted to int, and the output was depending on the last 3 bits.
     # So I worked backwards, finding potential A's and multiplying with 8, then checking all possible last 3 bits.
-    potentialA = {0}
+    potentialA = [0]
     for desiredOutput in reversed(program):
-        newPotentialA = set()
+        newPotentialA = []
         for a in potentialA:
             for lastABits in range(8):
                 hypotheticalA = a * 8 + lastABits
-                output = run(hypotheticalA, 0, 0, program)
+                output = run(hypotheticalA, 0, 0, program, breakAfterFirstOutput=True)
 
                 if output[0] == desiredOutput:
-                    newPotentialA.add(hypotheticalA)
+                    newPotentialA.append(hypotheticalA)
 
             potentialA = newPotentialA
 
